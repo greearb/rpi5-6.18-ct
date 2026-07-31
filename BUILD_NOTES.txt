@@ -1,0 +1,32 @@
+On Fedora, extra kernel build packages:
+	- gcc-aarch64-linux-gnu
+	- sysroot-aarch64
+
+Setup:
+$ cp configs/ct-rpi5.cfg .config
+$ make KERNEL=kernel_2712 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+
+Build (Normal):
+$ ./pkg_rpi5.bash
+
+	- The kernel builds in the root of the git repo. The package is
+	  structured in `rpi_linux`, created in the root of the repo.
+	- If bundling firmware, your firmware repo should be located at
+	  $HOME/linux-firmware. Otherwise, edit LINUX_FW in script.
+	- If bundling morse-micro halow support, you driver repo should be
+	  located at $HOME/morse_driver_ct. Otherwise, edit MORSE_DRIVER in
+	  script.
+
+Build (greearb):
+$ ./greearb_pkg_rpi5.bash
+
+	- Linux firmware location: /home/greearb/git/linux-firmware
+	- Tar structure: /home/greearb/tmp/rpi_linux
+	- Morse driver: /home/greearb/git/morse_driver_ct
+
+Installation:
+	- Build should dump out *.tar.gz file.
+	- Copy to /tmp on RPi5
+	- As root
+		$ tar --no-same-owner -mhzxf /tmp/<tar_ball>.tar.gz
+		$ reboot
