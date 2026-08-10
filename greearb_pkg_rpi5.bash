@@ -16,7 +16,8 @@ mkdir $RPI_BOOT/firmware
 mkdir $RPI_BOOT/overlays
 
 #set -x
-make -j8 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs || exit 1 sudo env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=$RPI_ROOT modules_install || exit 1
+make -j8 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs || exit 1
+sudo env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=$RPI_ROOT modules_install || exit 1
 if [[ -d $MORSE_DRIVER ]]; then
 	make -j32 $ARM_ENV -C $(pwd) M=$MORSE_DRIVER MORSE_TRACE_PATH=$MORSE_DRIVER KERNEL_SRC=$(pwd) CONFIG_WLAN_VENDOR_MORSE=m CONFIG_MORSE_USB=y CONFIG_MORSE_COUNTRY="US" CONFIG_MORSE_VENDOR_COMMAND=y CONFIG_MORSE_MONITOR=y CONFIG_MORSE_SDIO=y CONFIG_MORSE_SPI=y CONFIG_MORSE_DEBUG_MASK=2 MORSE_TRACE_PATH=$MORSE_DRIVER modules || exit 1
 	sudo env PATH=$PATH make $ARM_ENV -C $(pwd) M=$MORSE_DRIVER INSTALL_MOD_PATH=$RPI_ROOT modules_install || exit 1
