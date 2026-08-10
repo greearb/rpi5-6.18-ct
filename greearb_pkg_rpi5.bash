@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LINUX_FW=/home/greearb/linux-firmware
+LINUX_FW=/home/greearb/git/linux-firmware
 LINUX_VER=$(make kernelversion)
 
 MORSE_DRIVER=/home/greearb/git/morse_driver_ct
